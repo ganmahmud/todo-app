@@ -18,7 +18,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('TodoController');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -32,7 +32,18 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+
+$routes->resource('todo');
+
+// Equivalent to the following:
+$routes->get('/', 'TodoController::index');
+$routes->get('todo/new', 'TodoController::new');
+$routes->post('todo/create', 'TodoController::create');
+$routes->get('todo/(:segment)', 'TodoController::show/$1');
+$routes->get('todo/(:segment)/edit', 'TodoController::edit/$1');
+$routes->put('todo/(:segment)', 'TodoController::update/$1');
+$routes->patch('todo/(:segment)', 'TodoController::update/$1');
+$routes->delete('todo/(:segment)', 'TodoController::delete/$1');
 
 /*
  * --------------------------------------------------------------------
