@@ -32,6 +32,9 @@
           class="toggle-all"
           type="checkbox"
           v-model="allDone"
+          @change="$emit('toggleAll')"
+          :true-value="1" 
+          :false-value="0"
         />
         <label for="toggle-all"></label>
         <ul class="todo-list">
@@ -39,10 +42,10 @@
             v-for="todo in filteredTodos"
             class="todo"
             :key="todo.id"
-            :class="{ completed: todo.completed, editing: todo == editedTodo }"
+            :class="{ completed: isCompleted(todo.completed), editing: todo == editedTodo }"
           >
             <div class="view">
-              <input @change="updateTodo(todo)" class="toggle" type="checkbox" v-model="todo.completed" />
+              <input @toggleAll="updateTodo(todo)" @change="updateTodo(todo)" class="toggle" type="checkbox" :true-value="1" :false-value="0" v-model="todo.completed" />
               <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
               <button class="destroy" @click="removeTodo(todo)"></button>
             </div>
@@ -99,12 +102,12 @@
         },
         active: function(todos) {
           return todos.filter(function(todo) {
-            return !todo.completed;
+            return todo.completed != 1;
           });
         },
         completed: function(todos) {
           return todos.filter(function(todo) {
-            return todo.completed;
+            return todo.completed == 1;
           });
         }
       };
@@ -156,25 +159,29 @@
         // methods that implement data logic.
         // note there's no DOM manipulation here at all.
         methods: {
+          isCompleted: function(completed){
+            return completed == 1;
+          },
           addTodo: function() {
             var value = this.newTodo && this.newTodo.trim();
             if (!value) {
               return;
             }
-            fetch(this.apiURL + "todo/create", {
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-              },
+            const requestOptions = {
               method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ title: value })
-            })
+            };
+            fetch(this.apiURL + "todo/create", requestOptions)
             .then(res => {
               if (res.status < 500) {
                 this.todos.push({
-                title: value,
-                completed: false
-              });
+                  title: value,
+                  completed: false
+                });
+                console.log('create res', res);
+                console.log('op', requestOptions);
+                
               
               }
             })
@@ -182,7 +189,23 @@
           },
 
           removeTodo: function(todo) {
-            this.todos.splice(this.todos.indexOf(todo), 1);
+            fetch(this.apiURL + 'todo/' + todo.id, {
+              body: JSON.stringify(todo),
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+            .then(res => {
+              if (res.status < 500) {
+                this.todos.splice(this.todos.indexOf(todo), 1);
+                console.log('Delete response: ',res);
+                  
+              }
+              else{
+                console.log('Poor Delete: ',res);
+              }
+            })
           },
 
           editTodo: function(todo) {
@@ -211,6 +234,8 @@
                 
               }
             })
+            // console.log('String', todo.completed);
+            ;
           },
 
           doneEdit: function(todo) {
@@ -222,6 +247,9 @@
             todo.title = todo.title.trim();
             if (!todo.title) {
               this.removeTodo(todo);
+            }
+            else{
+              this.updateTodo(todo);
             }
           },
 

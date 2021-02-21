@@ -8,7 +8,10 @@ use App\Models\TodoModel;
 
 class TodoController extends BaseController{
     use ResponseTrait;
-    
+    /**
+    * gets all todo items 
+    * @return json
+    */
     public function index(){    
        //get all todos
         $model = new TodoModel();
@@ -16,7 +19,11 @@ class TodoController extends BaseController{
         return $this->respond($data);
     }
 
-    // get single todo
+    /**
+    * gets single todo item 
+    * @param number $id
+    * @return json
+    */
     public function todo($id = null)
     {
         $model = new TodoModel();
@@ -28,19 +35,22 @@ class TodoController extends BaseController{
         }
     }
 
-    // create a todo item
+    /**
+    * creates todo items 
+    * @return json
+    */
     public function create()
     {
         $model = new TodoModel();
         $data = [
             'title' => $this->request->getVar('title'),
-            'completed' => $this->request->getVar('completed')
+            // 'completed' => $this->request->getVar('completed')
         ];
         
         $op = $model->insert($data);
         if($op){
             $response = [
-            'status'   => 201,
+                'status'   => 201,
                 'error'    => false,
                 'messages' => [
                     'success' => 'Todo created successfully'
@@ -59,22 +69,19 @@ class TodoController extends BaseController{
         return $this->respondCreated($response);
     }
 
-    // update
+    /**
+    * updates single todo item 
+    * @param number $id
+    * @return json
+    */
     public function update($id = null){
-        // $this->response->setHeader('Content-Type', 'application/json');
+        
         $model = new TodoModel();
-        // $id = $this->request->getPost('id');
         $data = [
             'title' => $this->request->getVar('title'),
             'completed' => $this->request->getVar('completed'),
         ];
-        // echo $id."<br>";
-        // // echo $data['title']."<br>";
-        // // echo $data['completed'];
-        
-        // echo "<pre>";
-        // print_r ($data);
-        // echo "</pre>";
+       
         
         $op = $model->update($id, $data);
         if($op){
@@ -95,12 +102,16 @@ class TodoController extends BaseController{
                 ]
             ];
         }
-        // echo $this->respond($response);
+       
         
         return $this->respond($response);
     }
 
-    // delete
+    /**
+    * delete a todo item 
+    * @param number $id
+    * @return json
+    */
     public function delete($id = null){
         $model = new TodoModel();
         $data = $model->where('id', $id)->delete($id);
