@@ -32,7 +32,7 @@
           class="toggle-all"
           type="checkbox"
           v-model="allDone"
-          @change="$emit('toggleAll')"
+          @change="bulk_update"
           :true-value="1" 
           :false-value="0"
         />
@@ -45,7 +45,7 @@
             :class="{ completed: isCompleted(todo.completed), editing: todo == editedTodo }"
           >
             <div class="view">
-              <input @toggleAll="updateTodo(todo)" @change="updateTodo(todo)" class="toggle" type="checkbox" :true-value="1" :false-value="0" v-model="todo.completed" />
+              <input @change="updateTodo(todo)" class="toggle" type="checkbox" :true-value="1" :false-value="0" v-model="todo.completed" />
               <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
               <button class="destroy" @click="removeTodo(todo)"></button>
             </div>
@@ -237,7 +237,25 @@
             // console.log('String', todo.completed);
             ;
           },
-
+          bulk_update: function(){
+            
+            const bulkUpdateOptions = {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ todos: this.filteredTodos })
+            };
+            fetch(this.apiURL + "bulk/update", bulkUpdateOptions)
+            .then(res => {
+              if (res.status < 400) {
+                console.log('Bulk Update successfull', res);
+              }
+              else{
+                console.log('Bulk smash',res);
+              }
+            })
+            // console.log('bulk: ',bulkUpdateOptions);
+            
+          },
           doneEdit: function(todo) {
             // this.updateTodo(todo);
             if (!this.editedTodo) {
@@ -265,7 +283,6 @@
 
         // a custom directive to wait for the DOM to be updated
         // before focusing on the input field.
-        // http://vuejs.org/guide/custom-directive.html
         directives: {
           "todo-focus": function(el, binding) {
             if (binding.value) {

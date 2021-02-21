@@ -12,7 +12,7 @@ class TodoModel extends Model{
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['title', 'completed'];
+    protected $allowedFields = ['id', 'title', 'completed'];
 
     protected $useTimestamps = false;
     protected $createdField  = '';

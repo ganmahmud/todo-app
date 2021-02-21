@@ -56,17 +56,11 @@ class TodoController extends BaseController{
                     'success' => 'Todo created successfully'
                 ]
             ];
+            return $this->respondCreated($response);
         }
         else{
-            $response = [
-                'status'   => 401,
-                'error'    => true,
-                'messages' => [
-                    'success' => 'Todo Insert failed'
-                ]
-            ];
+            return $this->failNotFound('Todo insert failed');
         }
-        return $this->respondCreated($response);
     }
 
     /**
@@ -92,19 +86,12 @@ class TodoController extends BaseController{
                     'success' => 'Todo updated successfully'
                 ]
             ];
+            return $this->respond($response);
         }
         else{
-            $response = [
-                'status'   => 400,
-                'error'    => true,
-                'messages' => [
-                    'success' => 'Todo updated failed'
-                ]
-            ];
+            return $this->failNotFound('Todo update failed');
         }
        
-        
-        return $this->respond($response);
     }
 
     /**
@@ -128,6 +115,39 @@ class TodoController extends BaseController{
         }else{
             return $this->failNotFound('No employee found');
         }
+    }
+
+    /**
+    * updates todo items in batch 
+    * @param number $id
+    * @return json
+    */
+    public function bulk_update(){
+        // using updateBatch
+
+        $model = new TodoModel();
+        // $data = [
+        //     'title' => $this->request->getVar('title'),
+        //     'completed' => $this->request->getVar('completed'),
+        // ];
+        $data = json_decode(json_encode($this->request->getVar('todos')),true);
+        // $data = json_decode($todoStr,true);
+        
+        $op = $model->updateBatch($data, 'id');
+        if($op){
+            $response = [
+                'status'   => 201,
+                'error'    => null,
+                'messages' => [
+                    'success' => 'Todo updated successfully'
+                ]
+            ];
+            return $this->respond($response);
+        }
+        else{
+            return $this->failNotFound('No todo found');
+        }
+       
     }
 
 

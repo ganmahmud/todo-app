@@ -33,12 +33,14 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->add('/', 'Home::index');
+$routes->add('bulk/update', 'TodoController::bulk_update');
+
 $routes->get('/todos', 'TodoController::index');
 $routes->get('todo/(:segment)', 'TodoController::todo/$1');
 $routes->post('todo/create', 'TodoController::create');
 $routes->put('todo/(:segment)', 'TodoController::update/$1');
 $routes->delete('todo/(:segment)', 'TodoController::delete/$1');
-$routes->options('(:any)', 'TodoController::options');
+// $routes->options('(:any)', 'TodoController::options');
 // $routes->resource('todo');
 // Equivalent to the following:
 // $routes->get('/', 'TodoController::index');
