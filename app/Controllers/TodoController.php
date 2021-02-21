@@ -108,12 +108,12 @@ class TodoController extends BaseController{
                 'status'   => 200,
                 'error'    => null,
                 'messages' => [
-                    'success' => 'Employee successfully deleted'
+                    'success' => 'Todo successfully deleted'
                 ]
             ];
             return $this->respondDeleted($response);
         }else{
-            return $this->failNotFound('No employee found');
+            return $this->failNotFound('No todo found');
         }
     }
 
