@@ -52,6 +52,7 @@ class TodoController extends BaseController{
             $response = [
                 'status'   => 201,
                 'error'    => false,
+                'id'       => $model->insertID(),
                 'messages' => [
                     'success' => 'Todo created successfully'
                 ]

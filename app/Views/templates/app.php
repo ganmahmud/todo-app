@@ -177,9 +177,9 @@
               if (res.status < 500) {
                 this.todos.push({
                   title: value,
-                  completed: false
+                  completed: 0
                 });
-                console.log('create res', res);
+                console.log('Id', res.message);
                 console.log('op', requestOptions);
                 
               
