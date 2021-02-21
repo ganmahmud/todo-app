@@ -103,7 +103,6 @@ class TodoController extends BaseController{
         $model = new TodoModel();
         $data = $model->where('id', $id)->delete($id);
         if($data){
-            $model->delete($id);
             $response = [
                 'status'   => 200,
                 'error'    => null,
@@ -150,5 +149,26 @@ class TodoController extends BaseController{
        
     }
 
+    /**
+    * @return json
+    */
+    public function clear_completed(){
+
+        $model = new TodoModel();
+        $data = $model->where('completed', 1)->delete();
+        
+        if($data){
+            $response = [
+                'status'   => 200,
+                'error'    => null,
+                'messages' => [
+                    'success' => 'Completed cleared'
+                ]
+            ];
+            return $this->respondDeleted($response);
+        }else{
+            return $this->failNotFound('Clearing failed');
+        }
+    }
 
 }

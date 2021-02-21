@@ -34,6 +34,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->add('/', 'Home::index');
 $routes->add('bulk/update', 'TodoController::bulk_update');
+$routes->add('clear/completed', 'TodoController::clear_completed');
 
 $routes->get('/todos', 'TodoController::index');
 $routes->get('todo/(:segment)', 'TodoController::todo/$1');

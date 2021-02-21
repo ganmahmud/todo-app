@@ -124,9 +124,9 @@
         },
         created() {
           fetch(this.apiURL + 'todos')
-            .then(res => res.json())
-            .then(res => (this.todos = res))
-            .catch(error => console.log(error));
+          .then(res => res.json())
+          .then(res => (this.todos = res))
+          .catch(error => console.log(error));
         },
        
         // computed properties
@@ -253,7 +253,6 @@
                 console.log('Bulk smash',res);
               }
             })
-            // console.log('bulk: ',bulkUpdateOptions);
             
           },
           doneEdit: function(todo) {
@@ -277,7 +276,10 @@
           },
 
           removeCompleted: function() {
-            this.todos = filters.active(this.todos);
+            fetch(this.apiURL + 'clear/completed')
+            .then(res => res.json())
+            .then(res => (this.todos = filters.active(this.todos)))
+            .catch(error => console.log(error));
           }
         },
 
