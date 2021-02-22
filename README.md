@@ -36,4 +36,4 @@ To check the REST Controller please find `TodoController.php` in the `app > Cont
 The model (`TodoModel.php`) is in `app > Models` directory
 
 ## Cool Tip 
-To easily brows through this application without downloading the source, you may use [this](https://github1s.com/ganmahmud/the-infamous-todo-app). 
+To easily brows through this application without downloading the source, you may use [this](https://github1s.com/ganmahmud/todo-app). 
