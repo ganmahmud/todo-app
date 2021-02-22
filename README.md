@@ -27,7 +27,7 @@ During the development I used the _XAMPP_ to run the MariaDB service. You can ch
 
 ## Project Overview
 
-The frontne part of the application can be found in `app > Views > templates` directory as `app.php`
+The frontne part of the application can be found in `app > Views > templates` directory as `frontend.php`
 
 The vuejs front-end communicates with todo REST API via JavaScript Fetch API.
 

@@ -123,10 +123,7 @@
           apiURL: "<?php echo base_url(); ?>/"
         },
         created() {
-          fetch(this.apiURL + 'todos')
-          .then(res => res.json())
-          .then(res => (this.todos = res))
-          .catch(error => console.log(error));
+          this.fetchAllTodos();
         },
        
         // computed properties
@@ -159,6 +156,12 @@
         // methods that implement data logic.
         // note there's no DOM manipulation here at all.
         methods: {
+          fetchAllTodos: function(){
+            fetch(this.apiURL + 'todos')
+            .then(res => res.json())
+            .then(res => (this.todos = res))
+            .catch(error => console.log(error));
+          },
           isCompleted: function(completed){
             return completed == 1;
           },
@@ -180,11 +183,10 @@
                   completed: 0
                 });
                 console.log('Id', res.message);
-                console.log('op', requestOptions);
-                
-              
+                console.log('op', requestOptions);              
               }
             })
+            .then(res => (this.fetchAllTodos()))
             this.newTodo = "";
           },
 
