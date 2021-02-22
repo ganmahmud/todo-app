@@ -120,7 +120,7 @@
           newTodo: "",
           editedTodo: null,
           visibility: "all",
-          apiURL: "http://localhost:8080/"
+          apiURL: "<?php echo base_url(); ?>/"
         },
         created() {
           fetch(this.apiURL + 'todos')
