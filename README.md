@@ -1,10 +1,10 @@
 # To-Do List Application 
 
-![](https://img.shields.io/badge/vue-2.x-brightgreen.svg)
+[![](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 [![](https://img.shields.io/badge/Codeigniter-4.x-ee4323.svg)](https://codeigniter.com/user_guide/intro/index.html)
-![](https://img.shields.io/badge/MariaDB-10.4.17-c92ddc.svg)
-![](https://img.shields.io/badge/Composer-2.0.9-1f4074.svg)
-
+[![](https://img.shields.io/badge/MariaDB-10.4.17-c92ddc.svg)](https://mariadb.org/)
+[![](https://img.shields.io/badge/Composer-2.0.9-1f4074.svg)
+](https://getcomposer.org/)
 ## Server Requirements
 PHP version 7.3 or higher is required, with the following extensions installed:
 
