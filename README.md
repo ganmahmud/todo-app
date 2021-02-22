@@ -22,7 +22,7 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 _`php spark serve`_
 
 ## Database
-During the development I used the _XAMPP_ to run the MariaDB service. You can choose what is convenient for you. You will find SQL file in the `SQL` folder of the project's root directory.
+During the development I used the _XAMPP_ to run the MariaDB service. You can choose what is convenient for you. You will find SQL file in the `SQL` folder of the project's root directory. For configuring database settings to run project, please check the `.env` file.
 
 
 ## Project Overview
