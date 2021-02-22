@@ -1,4 +1,4 @@
-# To-Do list Application 
+# To-Do List Application 
 
 ![](https://img.shields.io/badge/vue-2.x-brightgreen.svg)
 [![](https://img.shields.io/badge/Codeigniter-4.x-ee4323.svg)](https://codeigniter.com/user_guide/intro/index.html)
